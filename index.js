@@ -7,6 +7,10 @@ app.get("/", function (req, res) {
   res.send("rota funcionando");
 });
 
+app.get("/document", function (req, res) {
+  res.send("rota de documentos funcionando");
+});
+
 app.post("/", function (req, res) {
   res.send("rota funcionando");
 });
