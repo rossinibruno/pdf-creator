@@ -26,10 +26,12 @@ app.use(
 );
 app.use(express.json());
 
-app.post("/", function (req, res) {
+app.post("/", async function (req, res) {
   const { name } = req.body;
 
-  queue.createJob({ name }).save();
+  const job = queue.createJob({ name });
+
+  await job.save();
 
   res.send("Adicionado a fila para criação de documento");
 });
@@ -41,7 +43,7 @@ app.listen(process.env.PORT, () => {
 queue.process(async function (job, done) {
   console.log(`Processing job ${job.id}`);
 
-  await createPdf(job.data, "arquivo.pdf");
+  createPdf(job.data, `arquivo${job.id}`);
 
   return done(null, job.data);
 });

@@ -1,5 +1,6 @@
 const { html } = require("@prairielearn/html");
 const { renderEjs } = require("@prairielearn/html-ejs");
+const fs = require("fs");
 
 const wkhtmltopdf = require("wkhtmltopdf");
 
@@ -8,7 +9,7 @@ const renderHtml = (params) =>
     ...params,
   })}`.toString();
 
-module.exports = createPdf = (params, filename) => {
+module.exports = createPdf = async (params, filename) => {
   const html = renderHtml(params);
 
   return new Promise(function (resolve, reject) {
