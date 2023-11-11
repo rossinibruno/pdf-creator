@@ -16,7 +16,10 @@ module.exports = createPdf = (params, filename) => {
 
     wkhtmltopdf(html).pipe(stream);
 
-    stream.on("finish", () => resolve());
+    stream.on("finish", () => {
+      console.log(html);
+      resolve();
+    });
     stream.on("error", reject); // or something like that. might need to close `hash`
   });
 };
