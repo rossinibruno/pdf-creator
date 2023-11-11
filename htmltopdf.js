@@ -11,5 +11,12 @@ const renderHtml = (params) =>
 module.exports = createPdf = (params, filename) => {
   const html = renderHtml(params);
 
-  wkhtmltopdf(html).pipe(fs.createWriteStream(`${filename}.pdf`));
+  return new Promise(function (resolve, reject) {
+    const stream = fs.createWriteStream(`${filename}.pdf`);
+
+    wkhtmltopdf(html).pipe(stream);
+
+    stream.on("finish", () => resolve());
+    stream.on("error", reject); // or something like that. might need to close `hash`
+  });
 };

@@ -38,10 +38,10 @@ app.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`);
 });
 
-queue.process(function (job, done) {
+queue.process(async function (job, done) {
   console.log(`Processing job ${job.id}`);
 
-  createPdf(job.data, "arquivo.pdf");
+  await createPdf(job.data, "arquivo.pdf");
 
   return done(null, job.data);
 });
