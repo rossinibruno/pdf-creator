@@ -2,7 +2,7 @@
   "dependencies": {
     "express": "^4.18.2"
   },
-  "name": "pdfcreator",
+  "name": "pdf-creator",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
