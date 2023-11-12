@@ -1,6 +1,6 @@
 const autentique = require("autentique-v2");
 const promisify = require("promisify-node");
-const rmFile = promisyfy(fs.rm);
+const rmFile = promisify(fs.rm);
 
 module.exports = createDocument = async (fileName) => {
   const attributes = {
