@@ -21,9 +21,9 @@ module.exports = createPdf = async (params, filename) => {
     wkhtmltopdf(html).pipe(stream);
 
     stream.on("finish", async (str) => {
-      // const src = fs.createReadStream("./big.file");
+      const src = fs.createReadStream(`./${filename}.pdf`);
 
-      await upload(`./${filename}.pdf`, str);
+      await upload(`./${filename}.pdf`, src);
       console.log(html);
 
       resolve();
