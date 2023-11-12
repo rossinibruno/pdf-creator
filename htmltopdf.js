@@ -23,7 +23,7 @@ module.exports = createPdf = async (params, filename) => {
     stream.on("finish", async (str) => {
       const src = fs.createReadStream(`./${filename}.pdf`);
 
-      await upload(`./${filename}.pdf`, src);
+      await upload(`${filename}.pdf`, src);
       console.log(html);
 
       resolve();
