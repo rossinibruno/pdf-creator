@@ -75,7 +75,7 @@ queue.process(async function (job, done) {
     file: "https://jucisrs.rs.gov.br/upload/arquivos/201710/30150625-criacao-de-pdf-a.pdf",
   };
 
-  autentique.document.create(attributes);
+  await autentique.document.create(attributes);
 
   return done(null, job.data);
 });
