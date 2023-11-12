@@ -20,13 +20,14 @@ const options = {
 
 const queue = new Queue("pdf-creator", options);
 
+app.use(express.json());
+app.use("/static", express.static("pdf"));
+
 app.use(
   basicAuth({
     users: { admin: "supersecret" },
   })
 );
-app.use(express.json());
-app.use("/static", express.static("pdf"));
 
 app.post("/", async function (req, res) {
   const { name } = req.body;
