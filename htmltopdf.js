@@ -20,8 +20,6 @@ module.exports = createPdf = async (params, filename) => {
     wkhtmltopdf(html).pipe(stream);
 
     stream.on("finish", async () => {
-      console.log(html);
-
       console.log(`Save document ${filename}.pdf`);
 
       resolve();
