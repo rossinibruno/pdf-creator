@@ -26,6 +26,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use("/static", express.static("pdf"));
 
 app.post("/", async function (req, res) {
   const { name } = req.body;
