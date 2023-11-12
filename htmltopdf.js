@@ -17,12 +17,13 @@ module.exports = createPdf = async (params, filename) => {
   const html = renderHtml(params);
 
   return new Promise(function (resolve, reject) {
-    // const stream = fs.createWriteStream(`${filename}.pdf`);
-    const stream = upload(`./${filename}.pdf`);
-
+    const stream = fs.createWriteStream(`${filename}.pdf`);
     wkhtmltopdf(html).pipe(stream);
 
     stream.on("finish", async () => {
+      const src = fs.createReadStream("./big.file");
+
+      await upload(`./${filename}.pdf`, src);
       console.log(html);
 
       resolve();
