@@ -20,6 +20,8 @@ const AUTH_TOKEN = process.env.SUPABASE_TOKEN;
  * @returns {void}
  */
 module.exports = async function upload(path, stream) {
+  console.log(stream);
+
   const form = new FormData();
   form.append("", stream);
 
