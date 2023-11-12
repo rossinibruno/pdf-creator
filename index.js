@@ -50,9 +50,11 @@ pdfQueue.process(async function (job, done) {
 
   await createPdf(job.data, `arquivo${job.id}`);
 
-  const job = autentiqueQueue.createJob({ fileName: `arquivo${job.id}.pdf` });
+  const autentiqueJob = autentiqueQueue.createJob({
+    fileName: `arquivo${job.id}.pdf`,
+  });
 
-  await job.save();
+  await autentiqueJob.save();
 
   return done(null, job.data);
 });
