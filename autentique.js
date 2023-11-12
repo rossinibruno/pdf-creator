@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const rmFile = (path, opts = "utf8") =>
   new Promise((resolve, reject) => {
-    fs.rm(path, opts, (err, data) => {
+    fs.unlink(path, opts, (err, data) => {
       if (err) reject(err);
       else {
         console.log(`${path} deleted`);
