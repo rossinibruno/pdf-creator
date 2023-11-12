@@ -1,11 +1,7 @@
 const { html } = require("@prairielearn/html");
 const { renderEjs } = require("@prairielearn/html-ejs");
 const fs = require("fs");
-
-const upload = require("./supabase");
-
 const wkhtmltopdf = require("wkhtmltopdf");
-const supabase = require("./supabase");
 
 const renderHtml = (params) =>
   html`${renderEjs(__filename, "<%- include('./document'); %>", {
