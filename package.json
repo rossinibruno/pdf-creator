@@ -6,6 +6,7 @@
     "@types/dotenv": "^8.2.0",
     "@types/form-data": "^2.5.0",
     "@types/node-fetch": "^2.6.9",
+    "@types/promisify-node": "^0.4.3",
     "@types/wkhtmltopdf": "^0.3.7",
     "autentique-v2": "^1.0.6",
     "axios": "^1.6.1",
@@ -15,6 +16,7 @@
     "express-basic-auth": "^1.2.1",
     "form-data": "^4.0.0",
     "node-fetch": "^2.6.1",
+    "promisify-node": "^0.5.0",
     "wkhtmltopdf": "^0.4.0"
   },
   "name": "pdf-creator",

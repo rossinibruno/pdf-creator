@@ -1,16 +1,6 @@
 const autentique = require("autentique-v2");
-const fs = require("fs");
-
-const rmFile = (path, opts = "utf8") =>
-  new Promise((resolve, reject) => {
-    fs.unlink(path, opts, (err, data) => {
-      if (err) reject(err);
-      else {
-        console.log(`${path} deleted`);
-        resolve(data);
-      }
-    });
-  });
+const promisify = require("promisify-node");
+const rmFile = promisyfy(fs.rm);
 
 module.exports = createDocument = async (fileName) => {
   const attributes = {
