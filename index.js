@@ -44,7 +44,7 @@ app.listen(process.env.PORT, () => {
 queue.process(async function (job, done) {
   console.log(`Processing job ${job.id}`);
 
-  await createPdf(job.data, `arquivo${job.id}`);
+  createPdf(job.data, `arquivo${job.id}`);
 
   return done(null, job.data);
 });
