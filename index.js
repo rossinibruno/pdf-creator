@@ -4,8 +4,8 @@ const Queue = require("bee-queue");
 const express = require("express");
 const app = express();
 const basicAuth = require("express-basic-auth");
-const autentique = require("autentique-v2");
 const createPdf = require("./htmltopdf");
+const createDocument = require("./autentique");
 
 const options = {
   removeOnSuccess: true,
@@ -60,40 +60,7 @@ pdfQueue.process(async function (job, done) {
 autentiqueQueue.process(async function (job, done) {
   console.log(`autentique job ${job.id}`);
 
-  const attributes = {
-    document: {
-      name: "NOME DO DOCUMENTO",
-    },
-    signers: [
-      {
-        email: "brunorossini@live.com",
-        action: "SIGN",
-        //   positions: [
-        //     {
-        //       x: "50", // Posição do Eixo X da ASSINATURA (0 a 100)
-        //       y: "80", // Posição do Eixo Y da ASSINATURA (0 a 100)
-        //       z: "1", // Página da ASSINATURA
-        //     },
-        //     {
-        //       x: "50", // Posição do Eixo X da ASSINATURA (0 a 100)
-        //       y: "50", // Posição do Eixo Y da ASSINATURA (0 a 100)
-        //       z: "2", // Página da ASSINATURA
-        //     },
-      },
-      {
-        phone: "+5527988712217",
-        action: "SIGN",
-        delivery_method: "DELIVERY_METHOD_WHATSAPP",
-      },
-    ],
-    file: `http://100.24.228.12:3000/static/${job.data.fileName}`,
-  };
-
-  autentique.token = process.env.AUTENTIQUE_TOKEN;
-  autentique.sandbox = true;
-
-  const response = await autentique.default.document.create(attributes);
-  console.log(response);
+  await createDocument(job.data.fileName);
 
   return done(null, job.data);
 });
