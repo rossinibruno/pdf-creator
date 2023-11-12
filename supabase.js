@@ -32,5 +32,6 @@ module.exports = async function upload(path, stream) {
     },
   });
 
+  console.log(result);
   return result;
 };
