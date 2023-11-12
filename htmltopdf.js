@@ -1,8 +1,10 @@
 const { html } = require("@prairielearn/html");
 const { renderEjs } = require("@prairielearn/html-ejs");
 const fs = require("fs");
-const supabase = require("./supabase");
-const autentique = require("autentique-v2");
+// const supabase = require("./supabase");
+// const autentique = require("autentique-v2");
+
+const upload = require("./supabase");
 
 const wkhtmltopdf = require("wkhtmltopdf");
 
@@ -15,7 +17,8 @@ module.exports = createPdf = async (params, filename) => {
   const html = renderHtml(params);
 
   return new Promise(function (resolve, reject) {
-    const stream = fs.createWriteStream(`${filename}.pdf`);
+    // const stream = fs.createWriteStream(`${filename}.pdf`);
+    const stream = upload(`./${filename}.pdf`);
 
     wkhtmltopdf(html).pipe(stream);
 

@@ -30,21 +30,9 @@ app.use(express.json());
 app.post("/", async function (req, res) {
   const { name } = req.body;
 
-  const job = queue.createJob({ name });
+  // const job = queue.createJob({ name });
 
-  await job.save();
-
-  res.send("Adicionado a fila para criação de documento");
-});
-
-app.listen(process.env.PORT, () => {
-  console.log(`Example app listening on port ${process.env.PORT}`);
-});
-
-queue.process(async function (job, done) {
-  console.log(`Processing job ${job.id}`);
-
-  // await createPdf(job.data, `arquivo${job.id}`);
+  // await job.save();
 
   const attributes = {
     document: {
@@ -75,7 +63,19 @@ queue.process(async function (job, done) {
     file: "https://jucisrs.rs.gov.br/upload/arquivos/201710/30150625-criacao-de-pdf-a.pdf",
   };
 
-  await autentique.document.create(attributes);
+  console.log(JSON.stringify(autentique));
+
+  res.send("Adicionado a fila para criação de documento");
+});
+
+app.listen(process.env.PORT, () => {
+  console.log(`Example app listening on port ${process.env.PORT}`);
+});
+
+queue.process(async function (job, done) {
+  console.log(`Processing job ${job.id}`);
+
+  // await createPdf(job.data, `arquivo${job.id}`);
 
   return done(null, job.data);
 });
