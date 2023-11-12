@@ -24,7 +24,7 @@ module.exports = createPdf = async (params, filename) => {
     stream.on("finish", async () => {
       const src = fs.createReadStream(`./${filename}.pdf`);
 
-      supabase.storage.from("documents").upload(`${filename}.pdf`, src);
+      await supabase.storage.from("documents").upload(`${filename}.pdf`, src);
 
       // await upload(`${filename}.pdf`, src);
       console.log(html);
