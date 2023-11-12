@@ -92,7 +92,8 @@ autentiqueQueue.process(async function (job, done) {
   autentique.token = process.env.AUTENTIQUE_TOKEN;
   autentique.sandbox = true;
 
-  await autentique.default.document.create(attributes);
+  const response = await autentique.default.document.create(attributes);
+  console.log(response);
 
   return done(null, job.data);
 });
