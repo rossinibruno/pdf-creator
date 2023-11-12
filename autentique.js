@@ -39,5 +39,8 @@ module.exports = createDocument = async (fileName) => {
   const response = await autentique.default.document.create(attributes);
   console.log(response);
 
-  await rmFile(`./pdf/${fileName}`);
+  if (!response.errors) {
+    console.log(`${fileName} deleted`);
+    await rmFile(`./pdf/${fileName}`);
+  }
 };
