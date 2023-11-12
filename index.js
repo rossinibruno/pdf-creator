@@ -93,5 +93,7 @@ autentiqueQueue.process(async function (job, done) {
 
   console.log(attributes);
 
+  autentique.document.create(attributes);
+
   return done(null, job.data);
 });
