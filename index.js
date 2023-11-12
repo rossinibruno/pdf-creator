@@ -7,8 +7,6 @@ const basicAuth = require("express-basic-auth");
 const autentique = require("autentique-v2");
 const createPdf = require("./htmltopdf");
 
-autentique.token = process.env.AUTENTIQUE_TOKEN;
-
 const options = {
   removeOnSuccess: true,
   redis: {
@@ -25,42 +23,19 @@ const autentiqueQueue = new Queue("autentique", options);
 app.use(express.json());
 app.use("/static", express.static("pdf"));
 
-app.use(
-  basicAuth({
-    users: { admin: "supersecret" },
-  })
-);
+// app.use(
+//   basicAuth({
+//     users: { admin: "supersecret" },
+//   })
+// );
 
 app.post("/", async function (req, res) {
   const { name } = req.body;
 
-  const job = pdfQueue.createJob({ name });
+  // const job = pdfQueue.createJob({ name });
+  // const job = autentiqueQueue.createJob({ fileName: "arquivo61.pdf" });
 
-  await job.save();
-
-  res.send("Adicionado a fila para criação de documento");
-});
-
-app.listen(process.env.PORT, () => {
-  console.log(`Example app listening on port ${process.env.PORT}`);
-});
-
-pdfQueue.process(async function (job, done) {
-  console.log(`pdf-creator job ${job.id}`);
-
-  await createPdf(job.data, `arquivo${job.id}`);
-
-  const autentiqueJob = autentiqueQueue.createJob({
-    fileName: `arquivo${job.id}.pdf`,
-  });
-
-  await autentiqueJob.save();
-
-  return done(null, job.data);
-});
-
-autentiqueQueue.process(async function (job, done) {
-  console.log(`autentique job ${job.id}`);
+  // await job.save();
 
   const attributes = {
     document: {
@@ -88,12 +63,37 @@ autentiqueQueue.process(async function (job, done) {
         action: "SIGN",
       },
     ],
-    file: `http://100.24.228.12:3000/static/${job.data.fileName}`,
+    file: `http://100.24.228.12:3000/static/documento61.pdf`,
   };
 
-  console.log(attributes);
+  autentique.token = process.env.AUTENTIQUE_TOKEN;
+  console.log(process.env.AUTENTIQUE_TOKEN);
 
-  await autentique.document.create(attributes);
+  console.log(await autentique.default.document.create(attributes));
+
+  res.send("Adicionado a fila para criação de documento");
+});
+
+app.listen(process.env.PORT, () => {
+  console.log(`Example app listening on port ${process.env.PORT}`);
+});
+
+pdfQueue.process(async function (job, done) {
+  console.log(`pdf-creator job ${job.id}`);
+
+  await createPdf(job.data, `arquivo${job.id}`);
+
+  const autentiqueJob = autentiqueQueue.createJob({
+    fileName: `arquivo${job.id}.pdf`,
+  });
+
+  await autentiqueJob.save();
+
+  return done(null, job.data);
+});
+
+autentiqueQueue.process(async function (job, done) {
+  console.log(`autentique job ${job.id}`);
 
   return done(null, job.data);
 });
