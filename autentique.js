@@ -1,4 +1,16 @@
 const autentique = require("autentique-v2");
+const fs = require("fs");
+
+const rmFile = (path, opts = "utf8") =>
+  new Promise((resolve, reject) => {
+    fs.rm(path, opts, (err, data) => {
+      if (err) reject(err);
+      else {
+        console.log(`${path} deleted`);
+        resolve(data);
+      }
+    });
+  });
 
 module.exports = createDocument = async (fileName) => {
   const attributes = {
@@ -35,4 +47,6 @@ module.exports = createDocument = async (fileName) => {
 
   const response = await autentique.default.document.create(attributes);
   console.log(response);
+
+  await rmFile(`./pdf/${fileName}`);
 };
