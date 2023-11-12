@@ -18,19 +18,21 @@ module.exports = createPdf = async (params, filename) => {
   const html = renderHtml(params);
 
   return new Promise(function (resolve, reject) {
-    const stream = fs.createWriteStream(`${filename}.pdf`);
-    wkhtmltopdf(html).pipe(stream);
+    // const stream = fs.createWriteStream(`${filename}.pdf`);
+    wkhtmltopdf(html).pipe((stream) =>
+      supabase.storage.from("documents").upload(`${filename}.pdf`, stream)
+    );
 
-    stream.on("finish", async () => {
-      const src = fs.createReadStream(`./${filename}.pdf`);
+    // stream.on("finish", async () => {
+    //   const src = fs.createReadStream(`./${filename}.pdf`);
 
-      await supabase.storage.from("documents").upload(`${filename}.pdf`, src);
+    //   await supabase.storage.from("documents").upload(`${filename}.pdf`, src);
 
-      // await upload(`${filename}.pdf`, src);
-      console.log(html);
+    //   // await upload(`${filename}.pdf`, src);
+    //   console.log(html);
 
-      resolve();
-    });
-    stream.on("error", reject); // or something like that. might need to close `hash`
+    //   resolve();
+    // });
+    // stream.on("error", reject); // or something like that. might need to close `hash`
   });
 };
