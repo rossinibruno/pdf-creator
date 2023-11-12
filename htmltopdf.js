@@ -7,6 +7,7 @@ const fs = require("fs");
 const upload = require("./supabase");
 
 const wkhtmltopdf = require("wkhtmltopdf");
+const supabase = require("./supabase");
 
 const renderHtml = (params) =>
   html`${renderEjs(__filename, "<%- include('./document'); %>", {
@@ -20,10 +21,12 @@ module.exports = createPdf = async (params, filename) => {
     const stream = fs.createWriteStream(`${filename}.pdf`);
     wkhtmltopdf(html).pipe(stream);
 
-    stream.on("finish", async (str) => {
+    stream.on("finish", async () => {
       const src = fs.createReadStream(`./${filename}.pdf`);
 
-      await upload(`${filename}.pdf`, src);
+      supabase.storage.from("documents").upload(`${filename}.pdf`, src);
+
+      // await upload(`${filename}.pdf`, src);
       console.log(html);
 
       resolve();
