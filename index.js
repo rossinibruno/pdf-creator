@@ -5,8 +5,9 @@ const express = require("express");
 const app = express();
 const basicAuth = require("express-basic-auth");
 const autentique = require("autentique-v2");
-
 const createPdf = require("./htmltopdf");
+
+autentique.token = process.env.AUTENTIQUE_TOKEN;
 
 const options = {
   removeOnSuccess: true,
@@ -18,7 +19,8 @@ const options = {
   },
 };
 
-const queue = new Queue("pdf-creator", options);
+const pdfQueue = new Queue("pdf-creator", options);
+const autentiqueQueue = new Queue("autentique", options);
 
 app.use(express.json());
 app.use("/static", express.static("pdf"));
@@ -32,7 +34,7 @@ app.use(
 app.post("/", async function (req, res) {
   const { name } = req.body;
 
-  const job = queue.createJob({ name });
+  const job = pdfQueue.createJob({ name });
 
   await job.save();
 
@@ -43,10 +45,51 @@ app.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}`);
 });
 
-queue.process(async function (job, done) {
-  console.log(`Processing job ${job.id}`);
+pdfQueue.process(async function (job, done) {
+  console.log(`pdf-creator job ${job.id}`);
 
   await createPdf(job.data, `arquivo${job.id}`);
+
+  const job = autentiqueQueue.createJob({ fileName: `arquivo${job.id}.pdf` });
+
+  await job.save();
+
+  return done(null, job.data);
+});
+
+autentiqueQueue.process(async function (job, done) {
+  console.log(`autentique job ${job.id}`);
+
+  const attributes = {
+    document: {
+      name: "NOME DO DOCUMENTO",
+    },
+    signers: [
+      {
+        email: "email@email.com",
+        action: "SIGN",
+        positions: [
+          {
+            x: "50", // Posição do Eixo X da ASSINATURA (0 a 100)
+            y: "80", // Posição do Eixo Y da ASSINATURA (0 a 100)
+            z: "1", // Página da ASSINATURA
+          },
+          {
+            x: "50", // Posição do Eixo X da ASSINATURA (0 a 100)
+            y: "50", // Posição do Eixo Y da ASSINATURA (0 a 100)
+            z: "2", // Página da ASSINATURA
+          },
+        ],
+      },
+      {
+        email: "email@email.com",
+        action: "SIGN",
+      },
+    ],
+    file: `http://100.24.228.12:3000/static/${job.data.fileName}`,
+  };
+
+  console.log(attributes);
 
   return done(null, job.data);
 });
