@@ -20,7 +20,7 @@ module.exports = createPdf = async (params, filename) => {
   return new Promise(function (resolve, reject) {
     // const stream = fs.createWriteStream(`${filename}.pdf`);
     wkhtmltopdf(html).pipe(
-      (stream) => console.log(stream)
+      console.log
       // supabase.storage.from("documents").upload(`${filename}.pdf`, stream)
     );
 
