@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@fnando/cnpj": "^1.0.2",
     "@prairielearn/html-ejs": "^1.1.13",
     "@supabase/supabase-js": "^2.38.4",
     "@types/axios": "^0.14.0",
