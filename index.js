@@ -6,7 +6,7 @@ const app = express();
 const basicAuth = require("express-basic-auth");
 const createPdf = require("./htmltopdf");
 const createDocument = require("./autentique");
-const CNPJHelper = require("./helpers/CNPJHelper")
+const {format} = require("./helpers/CNPJHelper")
 
 const options = {
   removeOnSuccess: true,
@@ -34,7 +34,9 @@ app.post("/", async function (req, res) {
   const { name, cnpj } = req.body;
 
   const helper = {
-    CNPJHelper
+    CNPJHelper: {
+      format
+    }
   }
 
   const job = pdfQueue.createJob({ name, cnpj, helper });
