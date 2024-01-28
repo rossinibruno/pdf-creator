@@ -4,7 +4,231 @@
     <meta name="viewport" content="initial-scale=1.0" />
     <meta charset="UTF-8" />
   </head>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
+  
+    html {
+      zoom: 1;
+    }
+  
+    .clear {
+      clear: both
+    }
+  
+    .negotiation-document {
+      font-family: 'Work Sans', sans-serif;
+      font-size: 12px;
+    }
+  
+    .negotiation-document .title {
+      font-size: 28px;
+      text-align: center;
+      background: #ededed;
+      font-weight: 600;
+      padding-top: 15px;
+      padding-bottom: 7px;
+    }
+  
+    .negotiation-document .title .subtitle {
+      font-size: 12px;
+      text-align: center;
+      background: #ededed;
+      font-weight: 600;
+      margin-top: 20px;
+      display: block;
+    }
+  
+    .negotiation-document .company .table,
+    .negotiation-document .coffee .table {
+      margin: 0px;
+      background-color: white
+    }
+  
+  
+    .negotiation-document .company .table .row div,
+    .negotiation-document .coffee .table .row div {
+      margin-bottom: 2px
+    }
+  
+    .negotiation-document .company .table .row,
+    .negotiation-document .coffee .table .row::after {
+      clear: both
+    }
+  
+    .negotiation-document .company .table .row,
+    .negotiation-document .coffee .table .row::before {
+      clear: both
+    }
+  
+    .negotiation-document .company .table .row .name,
+    .negotiation-document .coffee .table .row .name {
+      width: 50%;
+      overflow: hidden;
+      color: #adabab;
+      font-size: 12px;
+      float: left;
+    }
+  
+    .negotiation-document .coffee .table .row .name {
+      width: 82%
+    }
+  
+    .negotiation-document .company .table .row .name:before,
+    .negotiation-document .coffee .table .row .name:before {
+      float: left;
+      width: 0%;
+      white-space: nowrap;
+      margin-top: -4px;
+      letter-spacing: 0.3px;
+      content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+    }
+  
+    .negotiation-document .company .table .row .name span,
+    .negotiation-document .coffee .table .row .name span {
+      background-color: white;
+      padding-right: 5px
+    }
+  
+    .negotiation-document .company .table .row .data,
+    .negotiation-document .coffee .table .row .data {
+      width: 45%;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+      padding-left: 10px;
+      color: #4a4a4a;
+      float: left;
+    }
+  
+    .negotiation-document .coffee .table .row .data {
+      width: 15%;
+      float: right
+    }
+  
+    .negotiation-document .company .role {
+      font-size: 12px;
+      color: #b5b5b5;
+      margin-bottom: 5px;
+    }
+  
+    .negotiation-document .company .companyName {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #363636
+    }
+  
+    .negotiation-document .coffee {
+      margin-top: 25px;
+      font-size: 14px;
+      background: #ededed;
+      padding: 15px;
+      min-height: 70px;
+    }
+  
+    .negotiation-document .coffee .type {
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #363636
+    }
+  
+    .negotiation-document .coffee .table .row {
+      background: #ededed
+    }
+  
+  
+    .negotiation-document .coffee .table .row .name span {
+      background: #ededed
+    }
+  
+    .negotiation-document .observations {
+      margin-top: 25px
+    }
+  
+    .negotiation-document .tax {
+      font-size: 12px;
+      color: #363636;
+    }
+  
+    .negotiation-document .observations .table {
+      border: 1px solid #dbdbdb;
+      width: 100%;
+      background-color: white
+    }
+  
+    .negotiation-document .observations .table .title {
+      border-right: 1px solid #dbdbdb;
+      width: 120px;
+      text-align: left;
+      font-weight: normal;
+      padding: 10px;
+      font-size: 12px;
+      color: #b5b5b5;
+      background: none
+    }
+  
+    .negotiation-document .observations .table .title div {
+      margin-bottom: 5px
+    }
+  
+    .negotiation-document .observations .table .title span {
+      display: block;
+      font-size: 10px
+    }
+  
+    .negotiation-document .observations .table .content {
+      font-size: 12px;
+      padding: 10px;
+      color: #4a4a4a;
+      text-transform: capitalize;
+    }
+  
+    .tax-description {
+      margin-top: 10px;
+      font-size: 10px;
+    }
+  
+    .negotiation-document .observations .table .content .address {
+      font-size: 10px;
+      margin-top: 10px;
+    }
+  
+  
+  
+    .negotiation-document .observations .table .content ul {
+      list-style: none;
+      margin: 0;
+    }
+  
+    .negotiation-document .message {
+      background: none;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+  
+    .negotiation-document .message p {
+      color: #b5b5b5
+    }
+  
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+  
+    tr {
+      border-bottom: solid 1px rgb(200, 200, 200);
+    }
+  </style>
   <body>
+    <div class="card">
+      <div class="card-content">
+        <div class="negotiation-document">
+          <div class="title">
+            Confirmação de Negociação
+            <div class="subtitle">Transação: <%= negotiation.id %></div>
+          </div>
+        </div>
+      </div>
+    </div>
     Olá <%= name %>, bem vindo ao mundo!
     <%= cnpj %>
   </body>
