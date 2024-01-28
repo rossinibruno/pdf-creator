@@ -1,4 +1,4 @@
-const cnpj = require('@fnando/cnpj/dist/node')
+const cnpj = require("@fnando/cnpj/commonjs");
 
 const isValid = value => cnpj.isValid(value)
 const strip = value => cnpj.strip(value)
