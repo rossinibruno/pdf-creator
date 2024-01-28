@@ -30,9 +30,9 @@ app.use(
 );
 
 app.post("/", async function (req, res) {
-  const { name, cnpj } = req.body;
+  const { name, cnpj, negotiation } = req.body;
 
-  const job = pdfQueue.createJob({ name, cnpj });
+  const job = pdfQueue.createJob({ name, cnpj, negotiation });
 
   await job.save();
 
