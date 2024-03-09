@@ -4,7 +4,13 @@ const { SUPABASE_PROJECT, SUPABASE_TOKEN } = process.env;
 
 const supabase = createClient(
   `https://${SUPABASE_PROJECT}.supabase.co`,
-  `${SUPABASE_TOKEN}`
+  `${SUPABASE_TOKEN}`,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
 );
 
-module.exports = supabase;
+module.exports = supabase.auth.admin;
