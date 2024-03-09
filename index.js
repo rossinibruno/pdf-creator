@@ -3,6 +3,7 @@ require("dotenv").config();
 const Queue = require("bee-queue");
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const basicAuth = require("express-basic-auth");
 const createPdf = require("./htmltopdf");
 const { createDocument, getDocument } = require("./autentique");
@@ -20,6 +21,7 @@ const options = {
 const pdfQueue = new Queue("pdf-creator", options);
 const autentiqueQueue = new Queue("autentique", options);
 
+app.use(cors());
 app.use(express.json());
 app.use("/static", express.static("pdf"));
 
