@@ -44,11 +44,11 @@ app.get("/document/:id", async function (req, res) {
 
   console.log(id);
 
-  const response = await getDocument(id);
+  // const response = await getDocument(id);
 
-  console.log(response);
+  // console.log(response);
 
-  res.send(response);
+  res.send(id);
 });
 
 app.listen(process.env.PORT, () => {
