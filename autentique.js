@@ -46,6 +46,7 @@ module.exports = {
     const supabaseResponse = await supabase.from("documents").insert({
       negotiationId,
       documentId,
+      type: "CONTRACT",
     });
 
     console.log(supabaseResponse);
