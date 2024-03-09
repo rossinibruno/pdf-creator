@@ -43,10 +43,12 @@ module.exports = {
     const documentId = response.data.createDocument.id;
     console.log(JSON.stringify({ documentId, negotiationId }));
 
-    const supabaseResponse = await supabase.from("documents").insert({
-      negotiationId,
-      documentId,
-    });
+    const supabaseResponse = await supabase
+      .from("negotiations")
+      .update({
+        contractId: documentId,
+      })
+      .eq("id", negotiationId);
 
     console.log(supabaseResponse);
 
