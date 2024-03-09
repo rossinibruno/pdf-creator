@@ -5,7 +5,7 @@ const express = require("express");
 const app = express();
 const basicAuth = require("express-basic-auth");
 const createPdf = require("./htmltopdf");
-const createDocument = require("./autentique");
+const { createDocument, getDocument } = require("./autentique");
 
 const options = {
   removeOnSuccess: true,
@@ -37,6 +37,16 @@ app.post("/", async function (req, res) {
   await job.save();
 
   res.send("Adicionado a fila para criação de documento");
+});
+
+app.get("/document/:id", async function (req, res) {
+  const { id } = req.params;
+
+  const response = await getDocument(id);
+
+  console.log(response);
+
+  res.send(response);
 });
 
 app.listen(process.env.PORT, () => {
