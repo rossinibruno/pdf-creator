@@ -44,11 +44,9 @@ app.get("/document/:id", async function (req, res) {
 
   console.log(id);
 
-  // const response = await getDocument(id);
+  const response = await getDocument(id);
 
-  // console.log(response);
-
-  res.send(id);
+  res.send(response);
 });
 
 app.listen(process.env.PORT, () => {

@@ -45,6 +45,9 @@ module.exports = {
       await rmFile(`./pdf/${fileName}`);
     }
   },
-  getDocument: async (documentId) =>
-    await autentique.document.listById(documentId),
+  getDocument: async (documentId) => {
+    const response = await autentique.document.listById(documentId);
+    console.log(response);
+    return response;
+  },
 };
