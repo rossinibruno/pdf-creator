@@ -1,14 +1,13 @@
 const autentique = require("autentique-v2");
 const promisify = require("promisify-node");
 const fs = require("fs");
-const supabase = require("./supabase");
 const rmFile = promisify(fs.rm);
 
 autentique.token = process.env.AUTENTIQUE_TOKEN;
 autentique.sandbox = true;
 
 module.exports = {
-  createDocument: async (fileName, negotiationId) => {
+  createDocument: async (fileName) => {
     const attributes = {
       document: {
         name: "NOME DO DOCUMENTO",
@@ -41,16 +40,7 @@ module.exports = {
     const response = await autentique.default.document.create(attributes);
 
     const documentId = response.data.createDocument.id;
-    console.log(JSON.stringify({ documentId }));
-
-    const supabaseResponse = await supabase
-      .from("negotiations")
-      .update({
-        contractId: documentId,
-      })
-      .eq("id", negotiationId);
-
-    console.log(supabaseResponse);
+    console.log("DOCUMENT ID", documentId);
 
     if (!response.errors) {
       console.log(`${fileName} deleted`);

@@ -58,11 +58,8 @@ pdfQueue.process(async function (job, done) {
 
   await createPdf(job.data, `arquivo${job.id}`);
 
-  console.log(job.data);
-
   const autentiqueJob = autentiqueQueue.createJob({
     fileName: `arquivo${job.id}.pdf`,
-    negotiationId: job.data.negotiation.id,
   });
 
   await autentiqueJob.save();
@@ -71,9 +68,9 @@ pdfQueue.process(async function (job, done) {
 });
 
 autentiqueQueue.process(async function (job, done) {
-  console.log(`autentique job ${job.id} ${job.data.negotiationId}`);
+  console.log(`autentique job ${job.id}`);
 
-  await createDocument(job.data.fileName, job.data.negotiationId);
+  await createDocument(job.data.fileName);
 
   return done(null, job.data);
 });
