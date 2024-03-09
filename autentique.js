@@ -41,7 +41,7 @@ module.exports = {
     const response = await autentique.default.document.create(attributes);
 
     const documentId = response.data.createDocument.id;
-    console.log(JSON.stringify({ documentId }));
+    console.log(JSON.stringify({ documentId, negotiationId }));
 
     const supabaseResponse = await supabase
       .from("negotiations")
