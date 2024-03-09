@@ -69,7 +69,7 @@ pdfQueue.process(async function (job, done) {
 });
 
 autentiqueQueue.process(async function (job, done) {
-  console.log(`autentique job ${job.id}`);
+  console.log(`autentique job ${job.id} ${job.data.negotiationId}`);
 
   await createDocument(job.data.fileName, job.data.negotiationId);
 
