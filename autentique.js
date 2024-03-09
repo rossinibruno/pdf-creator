@@ -43,12 +43,14 @@ module.exports = {
     const documentId = response.data.createDocument.id;
     console.log(JSON.stringify({ documentId }));
 
-    await supabase
+    const supabaseResponse = await supabase
       .from("negotiations")
       .update({
         contractId: documentId,
       })
       .eq("id", negotiationId);
+
+    console.log(supabaseResponse);
 
     if (!response.errors) {
       console.log(`${fileName} deleted`);
