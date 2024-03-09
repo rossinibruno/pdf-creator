@@ -3,6 +3,9 @@ const promisify = require("promisify-node");
 const fs = require("fs");
 const rmFile = promisify(fs.rm);
 
+autentique.token = process.env.AUTENTIQUE_TOKEN;
+autentique.sandbox = true;
+
 module.exports = {
   createDocument: async (fileName) => {
     const attributes = {
@@ -34,9 +37,6 @@ module.exports = {
       file: `http://100.24.228.12:3000/static/${fileName}`,
     };
 
-    autentique.token = process.env.AUTENTIQUE_TOKEN;
-    autentique.sandbox = true;
-
     const response = await autentique.default.document.create(attributes);
     console.log(response);
 
@@ -45,12 +45,6 @@ module.exports = {
       await rmFile(`./pdf/${fileName}`);
     }
   },
-  getDocument: async (documentId) => {
-    autentique.token = process.env.AUTENTIQUE_TOKEN;
-    autentique.sandbox = true;
-
-    const response = await autentique.default.document.listById(documentId);
-    console.log(response);
-    return response;
-  },
+  getDocument: async (documentId) =>
+    await autentique.default.document.listById(documentId),
 };

@@ -42,8 +42,6 @@ app.post("/", async function (req, res) {
 app.get("/document/:id", async function (req, res) {
   const { id } = req.params;
 
-  console.log(id);
-
   const response = await getDocument(id);
 
   res.send(response);
