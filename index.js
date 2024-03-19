@@ -32,9 +32,9 @@ app.use(
 );
 
 app.post("/", async function (req, res) {
-  const { name, cnpj, negotiation } = req.body;
+  const { name, cnpj, negotiation, signers } = req.body;
 
-  const job = pdfQueue.createJob({ name, cnpj, negotiation });
+  const job = pdfQueue.createJob({ name, cnpj, negotiation, signers });
 
   await job.save();
 
@@ -59,8 +59,9 @@ pdfQueue.process(async function (job, done) {
   await createPdf(job.data, `arquivo${job.id}`);
 
   const autentiqueJob = autentiqueQueue.createJob({
-    fileName: `arquivo${job.id}.pdf`,
+    fileName: `arquivo${job.id}`,
     negotiationId: job.data.negotiation.id,
+    signers: job.data.signers,
   });
 
   await autentiqueJob.save();
@@ -71,7 +72,11 @@ pdfQueue.process(async function (job, done) {
 autentiqueQueue.process(async function (job, done) {
   console.log(`autentique job ${job.id}`);
 
-  await createDocument(job.data.fileName, job.data.negotiationId);
+  await createDocument(
+    job.data.fileName,
+    job.data.negotiationId,
+    job.data.signers
+  );
 
   return done(null, job.data);
 });
