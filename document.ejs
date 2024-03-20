@@ -224,12 +224,205 @@
         <div class="negotiation-document">
           <div class="title">
             Confirmação de Negociação
-            <div class="subtitle">Transação: <%= negotiation.id %></div>
+            <div class="subtitle">Transação: IMPLEMENTAR_DADO</div>
           </div>
+    
+          <div class="company">
+            <div class="role">Comprador</div>
+            <div class="companyName"><%= buyer.businessName %></div>
+            <div class="table">
+              <div class="row">
+                <div class="name"><span>Contato</span></div>
+                <div class="data">IMPLEMENTAR_DADO /
+                  <a href="mailto:IMPLEMENTAR_DADO" class="mailto-link">
+                    IMPLEMENTAR_DADO
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="name"><span>CNPJ</span></div>
+                <div class="data"><%= buyer.cnpj %></div>
+              </div>
+              <div class="row">
+                <div class="name"><span>Inscrição estadual</span></div>
+                <div class="data"><%= buyer.stateRegistration %></div>
+              </div>
+              <div class="row">
+                <div class="name"><span>Endereço</span></div>
+                <div class="data">
+                  <%= buyer.streetAddress %> -
+                  <%= buyer.numberAddress %> -
+                  <%= buyer.complementAddress %> -
+                  <%= buyer.suburbAddress %> -
+                  <%= buyer.cityAddress %> -
+                  <%= buyer.stateAddress %>
+                </div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+    
+          <div class="company">
+            <div class="role">Lojista</div>
+            <div class="companyName"><%= trader.companyName %></div>
+            <div class="table">
+              <div class="row">
+                <div class="name"><span>Contato</span></div>
+                <div class="data">IMPLEMENTAR_DADO /
+                  <a href="mailto:IMPLEMENTAR_DADO" class="mailto-link">
+                    IMPLEMENTAR_DADO
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="name"><span>CNPJ</span></div>
+                <div class="data"><%= trader.cnpj %></div>
+              </div>
+              <div class="row">
+                <div class="name"><span>Inscrição estadual</span></div>
+                <div class="data"><%= trader.stateRegistration %></div>
+              </div>
+              <div class="row">
+                <div class="name"><span>Endereço</span></div>
+                <div class="data">
+                  <%= trader.streetAddress %> -
+                  <%= trader.numberAddress %> -
+                  <%= trader.complementAddress %> -
+                  <%= trader.suburbAddress %> -
+                  <%= trader.cityAddress %> -
+                  <%= trader.stateAddress %>
+                </div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+    
+    
+          <div class="coffee">
+            <div class="type">
+              <%= negotiation.harvestSeason %>
+            </div>
+            <div class="table">
+              <div class="row">
+                <div class="name"><span>Quantidade</span></div>
+                <div class="data"><%= negotiation.amount %></div>
+              </div>
+              <div class="row">
+                <div class="name"><span>Preço (R$)</span></div>
+                <div class="data"><%= negotiation.price %>*</div>
+              </div>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <span class="tax"><%= negotiation.interestIncluded ? '* Valor livre de Funrural e Senar' : '* Valor sujeito à incidência de Funrural e Senar' %></span>
+    
+          <div class="observations">
+            <table class="table">
+              <tr>
+                <td colspan="2">Produtor vinculado</td>
+              </tr>
+              <tr>
+                <td class="title"><%= negotiation.amount %> sacas (60KG)</td>
+                <td class="content"><%= farmer.stateRegistration ? 'IE: '+farmer.stateRegistration+' - ' : '' %><%= farmer.name %></td>
+              </tr>
+            </table>
+    
+            <table class="table">
+              <tr>
+                <td class="title">Sacaria</td>
+                <td class="content">Café acondicionado em BigBag ou Sacaria</td>
+              </tr>
+              <tr>
+                <td class="title">Qualidade</td>
+                <td class="content">
+                  Café <%= negotiation.typeCoffee %>, <%= negotiation.descriptionCoffee %> <b><%= negotiation.certificate ? 'Com certificação 4C' : '' %></b>.
+                </td>
+              </tr>
+              <tr>
+                <td class="title">Prazo de entrega</td>
+                <td class="content">
+                  <%= negotiation.deliveryDate %>
+              </tr>
+              <tr>
+                <td class="title">Condições de pagamento</td>
+                <td class="content">
+                  Até 2 (dois) dias após entrega e conferência<br/>
+                  <% if(!negotiation.interestIncluded) { %>
+                    <span class="tax-description">
+                      Nas negociações firmadas sem o desconto das contribuições FUNRURAL e SENAR, deverá ser acrescidasde 1,5% incidente sobre o valor total da operação por conta exclusiva do produtor rural (vendedor).
+                    </span>
+                  <% } %>
+                </td>
+              </tr>
+    
+              <tr>
+                <td class="title">Banco de recebimento</td>
+                <td class="content">
+                  <ul>
+                    <li> Banco: <%= trader.bankNumber %> - <%= trader.bankName %></li>
+                    <li> Agência: <%= trader.bankAgency %></li>
+                    <li> Conta: <%= trader.bankAccount %></li>
+                    <li> CNPJ/CPF: <%= trader.cnpj %></li>
+                  </ul>
+                </td>
+              </tr>
+    
+              <tr>
+                <td class="title">
+                  <div>Local de descarga</div>
+                  <br />
+                  <span>CNPJ</span>
+                  <span>Endereço</span>
+                </td>
+                <td class="content">
+                  <ul>
+                    <li>Nome: <%= warehouse.name %></li>
+                    <li>Endereço:
+                      <%= warehouse.streetAddress %> -
+                      <%= warehouse.numberAddress %> -
+                      <%= warehouse.complementAddress %> -
+                      <%= warehouse.suburbAddress %> -
+                      <%= warehouse.cityAddress %> -
+                      <%= warehouse.stateAddress %>
+                    </li>
+                  </ul>
+    
+                  <ul class="address">
+                    <li>
+                      CNPJ: <%= buyer.cnpj %>
+                    </li>
+                    <li>
+                      Endereço:
+                      <%= buyer.streetAddress %> -
+                      <%= buyer.numberAddress %> -
+                      <%= buyer.complementAddress %> -
+                      <%= buyer.suburbAddress %> -
+                      <%= buyer.cityAddress %> -
+                      <%= buyer.stateAddress %>
+                    </li>
+                  </ul>
+    
+                </td>
+              </tr>
+              <tr>
+                <td class="title">Observações</td>
+                <td class="content"></td>
+              </tr>
+            </table>
+          </div>
+    
+          <div class="message">
+            <p>
+              Essa Confimação de Compra e Venda foi gerada automaticamente no <a
+                href="contacafe.com.br">contacafe.com.br</a> e não é um
+              documento oficial de compra e venda de café. As partes envolvidas se comprometem a seguir com o acordo e
+              formalizar a documentação necessária
+            </p>
+          </div>
+    
         </div>
+    
       </div>
     </div>
-    Olá <%= name %>, bem vindo ao mundo!
-    <%= cnpj %>
   </body>
 </html>

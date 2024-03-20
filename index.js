@@ -32,9 +32,9 @@ app.use(
 );
 
 app.post("/", async function (req, res) {
-  const { name, cnpj, negotiation, signers } = req.body;
+  // const { document, buyer, farmer, negotiation, signers } = req.body;
 
-  const job = pdfQueue.createJob({ name, cnpj, negotiation, signers });
+  const job = pdfQueue.createJob(req.body);
 
   await job.save();
 
